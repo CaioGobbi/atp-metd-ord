@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Node { //cria a lista encadeada
     String titulo;
     String autor;
@@ -38,4 +41,18 @@ class LinkedList {
             temp = temp.next;
         }
     }
+
+    //método para sugerir livros baseado nos livros lidos pelo usuário
+    public List<String> livrosSugeridos(List<String> userBooks) { //nova lista com os livros sugeridos
+        List<String> sugestao = new ArrayList<>();
+        Node temp = head;
+        while (temp != null) {
+            if (userBooks.contains(temp.autor)) {
+                sugestao.add(temp.titulo);
+            }
+            temp = temp.next;
+        }
+        return sugestao;
+    }
+
 }
