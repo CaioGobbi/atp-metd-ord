@@ -52,11 +52,41 @@ public class Main {
         userBooks.add(metamorfose);
         userBooks.add(oGuiaDoMochileiro);
 
-        //sugerindo livros com base nos livros lidos pelo usuário
-        List<Book> suggestedBooks = library.suggestBooks(userBooks);
-        System.out.println("Sugestões de livros:");
-        for (Book book : suggestedBooks) {
-            System.out.println(book.title);
+        // Buscando livros de um determinado autor no grafo (Simulando o nome de J.K. Rowling)
+        List<Book> rowlingBooks = library.searchByAuthor("J.K. Rowling");
+        if (rowlingBooks != null) {
+            System.out.println("Livros de J.K. Rowling:");
+            for (Book book : rowlingBooks) {
+                System.out.println(book.getTitle());
+            }
+        } else {
+            System.out.println("Autor não encontrado.");
+        }
+
+        // Ordenando a lista de livros por título usando Bubble Sort
+        List<Book> booksByTitle = new ArrayList<>(library.adjacencyList.keySet());
+        library.bubbleSortByTitle(booksByTitle);
+        System.out.println("Livros ordenados por título (Bubble Sort):");
+        for (Book book : booksByTitle) {
+            System.out.println(book.getTitle());
+        }
+
+        // Ordenando a lista de livros por ano usando Merge Sort
+        List<Book> booksByYear = new ArrayList<>(library.adjacencyList.keySet());
+        library.mergeSortByYear(booksByYear);
+        System.out.println("\nLivros ordenados por ano (Merge Sort):");
+        for (Book book : booksByYear) {
+            System.out.println(book.getTitle() + " - " + book.getYear());
+        }
+
+        // Chamando o algoritmo de Dijkstra para recomendar um caminho entre dois livros
+        Book sourceBook = oGuiaDoMochileiro;
+        Book destinationBook = memoriasDeCubas;
+        List<Book> recommendedPath = library.recommendPath(sourceBook, destinationBook);
+        System.out.println("\nCaminho recomendado entre " + sourceBook.getTitle() + " e " + destinationBook.getTitle() + ":");
+        for (Book book : recommendedPath) {
+            System.out.println(book.getTitle());
         }
     }
+    
 }
